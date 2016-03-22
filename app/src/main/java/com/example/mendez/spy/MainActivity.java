@@ -3,7 +3,6 @@ package com.example.mendez.spy;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -76,15 +75,22 @@ public class MainActivity extends AppCompatActivity {
                         String phoneNumber = bundle.getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
                         Log.i("PHONE RECEIVER", "Telephone is now ringing " + phoneNumber);
 
-                        Intent it = new Intent();
+//                        Intent i = new Intent(context, MainActivity.class);
+//                        i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//                        startActivity(i);
 
-                        Log.i("PHONE RECEIVER", "show....");
-
+                        intent.setPackage(null);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                        startActivity(intent);
 
 
                     } else if (newPhoneState != null && newPhoneState.equals(TelephonyManager.EXTRA_STATE_IDLE)) {
 //Once the call ends, phone will become idle
                         Log.i("PHONE RECEIVER", "Telephone is now idle");
+                        intent.setPackage(null);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                        startActivity(intent);
+
                     } else if (newPhoneState != null && newPhoneState.equals(TelephonyManager.EXTRA_STATE_OFFHOOK)) {
 //Once you receive call, phone is busy
                         Log.i("PHONE RECEIVER", "Telephone is now busy");
@@ -95,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
 
 
 
